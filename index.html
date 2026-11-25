@@ -6,6 +6,7 @@
 <title>MoonVale — игровое сообщество в Discord</title>
 <meta name="description" content="MoonVale — игровой Discord-сервер. Присоединяйся к сообществу, находи команду и смотри стримы.">
 <meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23d9dbde'/%3E%3Ccircle cx='23' cy='26' r='6' fill='%23000' fill-opacity='.2'/%3E%3Ccircle cx='42' cy='40' r='8' fill='%23000' fill-opacity='.2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,7 +36,15 @@ nav a:hover{color:var(--white);background:rgba(255,255,255,.07)}
 h1{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(64px,13vw,170px);line-height:.92;color:var(--white);letter-spacing:-.02em;
   text-shadow:0 2px 0 #444,0 4px 0 #333,0 6px 0 #222,0 14px 30px rgba(0,0,0,.8),0 0 60px rgba(255,255,255,.12)}
 h1 span{display:block;color:var(--gray);text-shadow:0 2px 0 #2a2a2a,0 12px 28px rgba(0,0,0,.8)}
-.tag{margin-top:26px;display:inline-block;padding:7px 16px;border-radius:999px;font-size:14px;font-weight:600;color:var(--light);border:1px solid var(--line);background:linear-gradient(180deg,#25272b,#141517);box-shadow:0 8px 20px rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.12) inset}
+.tag{margin-top:26px;display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 16px;padding:9px 20px;border-radius:18px;font-size:14px;font-weight:600;color:var(--light);border:1px solid var(--line);background:linear-gradient(180deg,#25272b,#141517);box-shadow:0 8px 20px rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.12) inset}
+.sep{width:1px;height:16px;background:var(--line)}
+.stat{display:inline-flex;align-items:center;gap:8px}
+.stat em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--white)}
+.dot{width:9px;height:9px;border-radius:50%}
+.d-on{background:#3ddc84;box-shadow:0 0 10px #3ddc84}
+.d-vc{background:#4fc3f7;box-shadow:0 0 10px #4fc3f7}
+.d-all{background:#8d9097;box-shadow:0 0 8px rgba(141,144,151,.6)}
+.avatar svg{width:64%;height:64%;filter:drop-shadow(0 0 8px rgba(255,255,255,.35))}
 .small{font-size:clamp(20px,2.6vw,28px)}
 .mini{padding:24px;display:flex;flex-direction:column;align-items:flex-start}
 .mini .avatar{width:56px;height:56px;border-radius:16px;font-size:22px;margin-bottom:16px}
@@ -108,6 +117,7 @@ footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="moon" viewBox="0 0 64 64"><defs><radialGradient id="mg" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#7a7d83"/></radialGradient></defs><circle cx="32" cy="32" r="26" fill="url(#mg)"/><circle cx="23" cy="26" r="5.5" fill="#000" fill-opacity=".2"/><circle cx="41" cy="40" r="7.5" fill="#000" fill-opacity=".2"/><circle cx="40" cy="21" r="3.2" fill="#000" fill-opacity=".18"/><circle cx="24" cy="44" r="3" fill="#000" fill-opacity=".16"/></symbol></svg>
 <canvas id="scene" aria-hidden="true"></canvas>
 <div id="portal"></div>
 
@@ -123,7 +133,13 @@ footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px
   <div class="hero">
     <div class="hero-text">
       <h1>Moon<span>Vale</span></h1>
-      <p class="tag">Игровое сообщество</p>
+      <div class="tag" id="stats">
+        <span>Игровое сообщество</span>
+        <i class="sep"></i>
+        <span class="stat" title="Онлайн"><b class="dot d-on"></b><em id="s-on">—</em></span>
+        <span class="stat" title="В голосовых каналах"><b class="dot d-vc"></b><em id="s-vc">—</em></span>
+        <span class="stat" title="Всего на сервере"><b class="dot d-all"></b><em id="s-all">—</em></span>
+      </div>
       <p class="lead">Лунная долина для тех, кто играет вместе. Заходи на сервер MoonVale, находи команду и оставайся с нами.</p>
       <div class="actions">
         <a class="btn btn-main" href="https://discord.gg/j4Nkn2MgW4" data-go>Войти в MoonVale</a>
@@ -153,13 +169,13 @@ footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px
       <p class="sub reveal">На MoonVale стримят TyGaM и v3lmurt. Заходи на их каналы в Twitch.</p>
       <div class="streamers">
         <div class="card mini reveal tilt">
-          <div class="avatar">T</div>
+          <div class="avatar"><svg><use href="#moon"/></svg></div>
           <h3>TyGaM</h3>
           <p class="handle">twitch.tv/tygam344</p>
           <a class="btn btn-ghost" href="https://www.twitch.tv/tygam344" data-go>Смотреть канал</a>
         </div>
         <div class="card mini reveal tilt">
-          <div class="avatar">V</div>
+          <div class="avatar"><svg><use href="#moon"/></svg></div>
           <h3>v3lmurt</h3>
           <p class="handle">twitch.tv/v3lmurt</p>
           <a class="btn btn-ghost" href="https://www.twitch.tv/v3lmurt" data-go>Смотреть канал</a>
@@ -276,6 +292,26 @@ document.querySelectorAll('.tilt').forEach(function(el){
 /* ---------- scroll reveal ---------- */
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+/* ---------- Discord stats ---------- */
+(function(){
+  var GUILD='1498036650737926204', CODE='j4Nkn2MgW4';
+  function set(id,v){document.getElementById(id).textContent=(v==null?'—':Number(v).toLocaleString('ru-RU'));}
+  function get(u){return fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();});}
+  function load(){
+    Promise.allSettled([
+      get('https://discord.com/api/v9/invites/'+CODE+'?with_counts=true'),
+      get('https://discord.com/api/guilds/'+GUILD+'/widget.json')
+    ]).then(function(r){
+      var inv=r[0].status==='fulfilled'?r[0].value:null, w=r[1].status==='fulfilled'?r[1].value:null;
+      var online=inv&&inv.approximate_presence_count!=null?inv.approximate_presence_count:(w?w.presence_count:null);
+      var total=inv&&inv.approximate_member_count!=null?inv.approximate_member_count:null;
+      var voice=w&&w.members?w.members.filter(function(m){return m.channel_id;}).length:null;
+      set('s-on',online);set('s-vc',voice);set('s-all',total);
+    });
+  }
+  load(); setInterval(load,60000);
+})();
 
 /* ---------- portal transition to Discord / Twitch ---------- */
 var portal=document.getElementById('portal');
