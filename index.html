@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MoonVale — игровое сообщество в Discord</title>
+<meta name="description" content="MoonVale — игровой Discord-сервер. Присоединяйся к сообществу, находи команду и смотри стримы.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#08080a; --dark:#1a1b1e; --graphite:#2b2d31; --gray:#8d9097; --light:#d9dbde; --white:#f5f6f7;
+  --line:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(1200px 700px at 75% -10%,#26282c 0%,transparent 60%),var(--black);color:var(--light);font-family:'Manrope',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+#scene{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header,footer{position:relative;z-index:1}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--white);outline-offset:3px}
+
+/* navigation */
+header{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px clamp(20px,5vw,64px);backdrop-filter:blur(14px);background:linear-gradient(180deg,rgba(8,8,10,.8),rgba(8,8,10,0));}
+.logo{font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;letter-spacing:.04em;color:var(--white);text-shadow:0 0 18px rgba(255,255,255,.35)}
+nav{display:flex;gap:6px}
+nav a{padding:8px 16px;border-radius:10px;font-size:14px;font-weight:600;color:var(--gray);transition:.25s}
+nav a:hover{color:var(--white);background:rgba(255,255,255,.07)}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px clamp(20px,5vw,64px) 80px}
+.hero-text{max-width:640px}
+h1{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(64px,13vw,170px);line-height:.92;color:var(--white);letter-spacing:-.02em;
+  text-shadow:0 2px 0 #444,0 4px 0 #333,0 6px 0 #222,0 14px 30px rgba(0,0,0,.8),0 0 60px rgba(255,255,255,.12)}
+h1 span{display:block;color:var(--gray);text-shadow:0 2px 0 #2a2a2a,0 12px 28px rgba(0,0,0,.8)}
+.tag{margin-top:26px;display:inline-block;padding:7px 16px;border-radius:999px;font-size:14px;font-weight:600;color:var(--light);border:1px solid var(--line);background:linear-gradient(180deg,#25272b,#141517);box-shadow:0 8px 20px rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.12) inset}
+.small{font-size:clamp(20px,2.6vw,28px)}
+.mini{padding:24px;display:flex;flex-direction:column;align-items:flex-start}
+.mini .avatar{width:56px;height:56px;border-radius:16px;font-size:22px;margin-bottom:16px}
+.mini h3{font-size:18px}
+.mini .handle{margin:4px 0 18px}
+.mini .btn{padding:11px 20px;font-size:14px}
+.lead{margin-top:18px;font-size:clamp(16px,1.6vw,19px);max-width:480px;color:var(--gray)}
+.actions{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:14px;font-weight:700;font-size:15px;cursor:pointer;border:1px solid var(--line);transition:transform .25s,box-shadow .25s,background .25s}
+.btn-main{background:linear-gradient(180deg,#fff,#c9cbcf);color:#0b0b0c;box-shadow:0 10px 30px rgba(255,255,255,.18),0 2px 0 #fff inset,0 -3px 0 rgba(0,0,0,.18) inset}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(255,255,255,.3),0 2px 0 #fff inset,0 -3px 0 rgba(0,0,0,.18) inset}
+.btn-ghost{background:linear-gradient(180deg,#25272b,#17181a);color:var(--white);box-shadow:0 10px 26px rgba(0,0,0,.6),0 1px 0 rgba(255,255,255,.12) inset}
+.btn-ghost:hover{transform:translateY(-3px);background:linear-gradient(180deg,#313338,#1d1e21)}
+.btn:active{transform:translateY(0)}
+
+/* sections */
+section{padding:100px clamp(20px,5vw,64px)}
+.wrap{max-width:1100px;margin:0 auto}
+h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(26px,4vw,44px);color:var(--white);letter-spacing:-.01em;text-shadow:0 8px 24px rgba(0,0,0,.7)}
+.sub{margin-top:14px;max-width:520px;color:var(--gray)}
+
+.card{--rx:0deg;--ry:0deg;position:relative;border-radius:26px;padding:36px;border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(43,45,49,.85),rgba(14,14,16,.92));
+  box-shadow:0 30px 60px rgba(0,0,0,.65),0 1px 0 rgba(255,255,255,.1) inset,0 0 0 1px rgba(0,0,0,.4);
+  transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .2s ease-out,box-shadow .3s;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.12),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover::before{opacity:1}
+.card:hover{box-shadow:0 40px 80px rgba(0,0,0,.75),0 1px 0 rgba(255,255,255,.16) inset}
+
+.discord{margin-top:48px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
+.discord h3{font-family:'Unbounded',sans-serif;font-size:clamp(22px,3vw,32px);color:var(--white);margin-bottom:12px}
+.discord p{color:var(--gray);margin-bottom:26px;max-width:460px}
+.cube-icon{justify-self:center;width:150px;height:150px;perspective:600px}
+.cube-icon div{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:spin 14s linear infinite}
+.cube-icon i{position:absolute;inset:0;width:150px;height:150px;border:1px solid rgba(255,255,255,.25);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.02));box-shadow:0 0 30px rgba(255,255,255,.08) inset}
+.cube-icon i:nth-child(1){transform:translateZ(75px)}
+.cube-icon i:nth-child(2){transform:rotateY(180deg) translateZ(75px)}
+.cube-icon i:nth-child(3){transform:rotateY(90deg) translateZ(75px)}
+.cube-icon i:nth-child(4){transform:rotateY(-90deg) translateZ(75px)}
+.cube-icon i:nth-child(5){transform:rotateX(90deg) translateZ(75px)}
+.cube-icon i:nth-child(6){transform:rotateX(-90deg) translateZ(75px)}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg)}}
+
+.streamers{margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;max-width:620px}
+.avatar{width:84px;height:84px;border-radius:22px;display:grid;place-items:center;font-family:'Unbounded',sans-serif;font-weight:900;font-size:34px;color:var(--white);margin-bottom:24px;
+  background:linear-gradient(145deg,#4a4d54,#17181b);box-shadow:0 14px 30px rgba(0,0,0,.7),0 2px 0 rgba(255,255,255,.2) inset,0 -4px 0 rgba(0,0,0,.35) inset;text-shadow:0 0 20px rgba(255,255,255,.5)}
+.card h3{font-family:'Unbounded',sans-serif;font-size:24px;color:var(--white)}
+.card .handle{color:var(--gray);font-size:14px;margin:6px 0 24px}
+
+footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px;border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,rgba(0,0,0,.6))}
+
+/* page transition */
+#portal{position:fixed;inset:0;z-index:50;pointer-events:none;background:radial-gradient(circle at var(--px,50%) var(--py,50%),#fff 0,#cfd1d4 40%,#1a1b1e 100%);clip-path:circle(0 at var(--px,50%) var(--py,50%));transition:clip-path .7s cubic-bezier(.7,0,.2,1)}
+#portal.go{clip-path:circle(150% at var(--px,50%) var(--py,50%))}
+
+/* load */
+.hero-text{animation:in 1s .1s both cubic-bezier(.2,.7,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.reveal.on{opacity:1;transform:none}
+
+@media(max-width:760px){
+  .discord{grid-template-columns:1fr}
+  .cube-icon{display:none}
+  nav a{padding:8px 10px}
+  .hero{align-items:flex-end}
+  .card{padding:28px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div id="portal"></div>
+
+<header>
+  <a href="#top" class="logo">MoonVale</a>
+  <nav>
+    <a href="#discord">Discord</a>
+    <a href="#twitch">Twitch</a>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="hero-text">
+      <h1>Moon<span>Vale</span></h1>
+      <p class="tag">Игровое сообщество</p>
+      <p class="lead">Лунная долина для тех, кто играет вместе. Заходи на сервер MoonVale, находи команду и оставайся с нами.</p>
+      <div class="actions">
+        <a class="btn btn-main" href="https://discord.gg/j4Nkn2MgW4" data-go>Войти в MoonVale</a>
+        <a class="btn btn-ghost" href="#discord">О сервере</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="discord">
+    <div class="wrap">
+      <h2 class="reveal">Добро пожаловать в MoonVale</h2>
+      <p class="sub reveal">Общайся, собирай команду и узнавай о стримах первым.</p>
+      <div class="card discord reveal tilt">
+        <div>
+          <h3>MoonVale ждёт тебя в Discord</h3>
+          <p>Нажми на кнопку, и мы откроем приглашение на сервер.</p>
+          <a class="btn btn-main" href="https://discord.gg/j4Nkn2MgW4" data-go>Открыть приглашение</a>
+        </div>
+        <div class="cube-icon" aria-hidden="true"><div><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="twitch">
+    <div class="wrap">
+      <h2 class="reveal small">Стримеры сервера</h2>
+      <p class="sub reveal">На MoonVale стримят TyGaM и v3lmurt. Заходи на их каналы в Twitch.</p>
+      <div class="streamers">
+        <div class="card mini reveal tilt">
+          <div class="avatar">T</div>
+          <h3>TyGaM</h3>
+          <p class="handle">twitch.tv/tygam344</p>
+          <a class="btn btn-ghost" href="https://www.twitch.tv/tygam344" data-go>Смотреть канал</a>
+        </div>
+        <div class="card mini reveal tilt">
+          <div class="avatar">V</div>
+          <h3>v3lmurt</h3>
+          <p class="handle">twitch.tv/v3lmurt</p>
+          <a class="btn btn-ghost" href="https://www.twitch.tv/v3lmurt" data-go>Смотреть канал</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 MoonVale. Все права защищены.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ---------- 3D scene: voxel moon ---------- */
+(function(){
+  if(!window.THREE) return;
+  var canvas=document.getElementById('scene'), renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});}catch(e){return;}
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  var scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(42,1,.1,200);
+  camera.position.set(0,0,11);
+
+  scene.add(new THREE.AmbientLight(0x6a6d73,.55));
+  var sun=new THREE.DirectionalLight(0xffffff,1.7); sun.position.set(-6,4,6); scene.add(sun);
+  var rim=new THREE.PointLight(0x9aa0a8,1.2,40); rim.position.set(7,-3,-5); scene.add(rim);
+
+  // moon made of cubes
+  var N=12, s=.27, pts=[];
+  for(var x=-N;x<=N;x++)for(var y=-N;y<=N;y++)for(var z=-N;z<=N;z++){
+    var d=Math.sqrt(x*x+y*y+z*z);
+    if(d<=N+.3&&d>N-1.2)pts.push([x,y,z,d]);
+  }
+  var rnd=(function(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}})(7);
+  var craters=[];
+  for(var i=0;i<11;i++){var v=new THREE.Vector3(rnd()-.5,rnd()-.5,rnd()-.5).normalize();craters.push({v:v,r:.14+rnd()*.28});}
+  var geo=new THREE.BoxGeometry(s*.97,s*.97,s*.97);
+  var mat=new THREE.MeshStandardMaterial({roughness:.92,metalness:.05});
+  var moon=new THREE.InstancedMesh(geo,mat,pts.length), m=new THREE.Matrix4(), c=new THREE.Color(), dir=new THREE.Vector3();
+  pts.forEach(function(p,i){
+    dir.set(p[0],p[1],p[2]).normalize();
+    var depth=0,rim2=0;
+    craters.forEach(function(cr){
+      var ang=Math.acos(Math.min(1,dir.dot(cr.v)));
+      if(ang<cr.r)depth=Math.max(depth,1-ang/cr.r);
+      else if(ang<cr.r*1.18)rim2=1;
+    });
+    var k=1-depth*.1+rim2*.03, g=.5+rnd()*.28-depth*.28+rim2*.12;
+    m.makeTranslation(p[0]*s*k,p[1]*s*k,p[2]*s*k);
+    moon.setMatrixAt(i,m); c.setRGB(g,g,g*1.02); moon.setColorAt(i,c);
+  });
+  moon.instanceColor.needsUpdate=true;
+  var moonGroup=new THREE.Group(); moonGroup.add(moon); scene.add(moonGroup);
+
+  // orbiting dark cubes
+  var orbit=[];
+  for(var j=0;j<7;j++){
+    var sz=.25+rnd()*.35;
+    var cube=new THREE.Mesh(new THREE.BoxGeometry(sz,sz,sz),new THREE.MeshStandardMaterial({color:0x2b2d31,roughness:.35,metalness:.7}));
+    cube.add(new THREE.LineSegments(new THREE.EdgesGeometry(cube.geometry),new THREE.LineBasicMaterial({color:0xcfd1d4,transparent:true,opacity:.55})));
+    cube.userData={a:rnd()*6.28,r:4.6+rnd()*2.2,sp:.1+rnd()*.18,y:(rnd()-.5)*3,rot:(rnd()-.5)*.02};
+    scene.add(cube); orbit.push(cube);
+  }
+
+  // stars
+  var sp=new Float32Array(700*3);
+  for(var q=0;q<sp.length;q+=3){sp[q]=(rnd()-.5)*70;sp[q+1]=(rnd()-.5)*40;sp[q+2]=-8-rnd()*30;}
+  var sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
+  var stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.09,transparent:true,opacity:.7}));
+  scene.add(stars);
+
+  var mx=0,my=0,sy=0,wide=true;
+  addEventListener('mousemove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;});
+  addEventListener('scroll',function(){sy=scrollY;},{passive:true});
+  function resize(){
+    renderer.setSize(innerWidth,innerHeight,false);
+    camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+    wide=innerWidth>900; var k=wide?1:.62; moonGroup.scale.setScalar(k);
+  }
+  addEventListener('resize',resize); resize();
+
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches, t0=performance.now();
+  function frame(now){
+    var t=(now-t0)/1000;
+    var targetX=wide?3.6:0, targetY=wide?0:2.2-Math.min(sy/innerHeight,1)*1.2;
+    moonGroup.position.x+=(targetX-moonGroup.position.x)*.05;
+    moonGroup.position.y+=(targetY-moonGroup.position.y)*.05+Math.sin(t*.6)*.002;
+    if(!reduce){moonGroup.rotation.y=t*.12+sy*.0012;}
+    moonGroup.rotation.x=.25+my*.25; moonGroup.rotation.z=-.1+mx*.1;
+    camera.position.x+=(mx*1.2-camera.position.x)*.04;
+    camera.position.y+=(-my*.8-camera.position.y)*.04;
+    camera.lookAt(0,0,0);
+    orbit.forEach(function(o){var d=o.userData;d.a+=d.sp*.01*(reduce?0:1);
+      o.position.set(moonGroup.position.x+Math.cos(d.a)*d.r*(wide?1:.7),d.y+moonGroup.position.y,Math.sin(d.a)*d.r*.6);
+      o.rotation.x+=d.rot;o.rotation.y+=d.rot*1.4;});
+    stars.rotation.y=t*.005;
+    renderer.render(scene,camera);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- 3D tilt on cards ---------- */
+document.querySelectorAll('.tilt').forEach(function(el){
+  el.addEventListener('mousemove',function(e){
+    var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    el.style.setProperty('--ry',((x-.5)*10)+'deg');
+    el.style.setProperty('--rx',((.5-y)*10)+'deg');
+    el.style.setProperty('--mx',(x*100)+'%');
+    el.style.setProperty('--my',(y*100)+'%');
+  });
+  el.addEventListener('mouseleave',function(){el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg');});
+});
+
+/* ---------- scroll reveal ---------- */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+/* ---------- portal transition to Discord / Twitch ---------- */
+var portal=document.getElementById('portal');
+document.querySelectorAll('[data-go]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    portal.style.setProperty('--px',e.clientX+'px');
+    portal.style.setProperty('--py',e.clientY+'px');
+    portal.classList.add('go');
+    setTimeout(function(){location.href=a.href;},650);
+  });
+});
+addEventListener('pageshow',function(){portal.classList.remove('go');});
+</script>
+</body>
+</html>
