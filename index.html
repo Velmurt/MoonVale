@@ -114,21 +114,74 @@ footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px
   .card{padding:28px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* header extras */
+nav{align-items:center}
+.join{padding:9px 18px;font-size:13px;border-radius:12px}
+.lang{cursor:pointer;font:700 12px 'Manrope',sans-serif;color:var(--light);padding:8px 11px;border-radius:10px;border:1px solid var(--line);background:linear-gradient(180deg,#25272b,#141517);box-shadow:0 6px 16px rgba(0,0,0,.5)}
+.lang:hover{color:#fff;background:#2b2d31}
+/* features */
+.feat{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
+.feat .card{padding:28px}
+.ico{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;margin-bottom:18px;font:900 16px 'Unbounded',sans-serif;color:#fff;background:linear-gradient(145deg,#4a4d54,#17181b);box-shadow:0 12px 24px rgba(0,0,0,.65),0 2px 0 rgba(255,255,255,.2) inset,0 -4px 0 rgba(0,0,0,.35) inset;text-shadow:0 0 14px rgba(255,255,255,.6)}
+.feat h3{font-family:'Unbounded',sans-serif;font-size:18px;color:var(--white);margin-bottom:8px}
+.feat p{color:var(--gray);font-size:15px}
+/* reviews page */
+#reviews{display:none;min-height:100vh;padding-top:130px}
+body.rv #home{display:none}
+body.rv #reviews{display:block}
+.back{display:inline-block;margin-bottom:22px;color:var(--gray);font-weight:600;font-size:14px}
+.back:hover{color:#fff}
+.rv-grid{margin-top:40px;display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:30px;align-items:start}
+#rform{display:flex;flex-direction:column;gap:14px;padding:28px}
+#rform label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:700;color:var(--gray)}
+#rform input,#rform textarea{font:500 15px 'Manrope',sans-serif;color:var(--white);background:#0e0f11;border:1px solid var(--line);border-radius:12px;padding:12px 14px;resize:vertical;box-shadow:0 2px 8px rgba(0,0,0,.6) inset}
+#rform input:focus,#rform textarea:focus{outline:none;border-color:rgba(255,255,255,.4);box-shadow:0 0 0 3px rgba(255,255,255,.08)}
+.stars{display:flex;gap:6px}
+.stars button,.stv{font-size:26px;line-height:1;background:none;border:0;cursor:pointer;color:#3a3c40;transition:.15s}
+.stars button.on,.stv.on{color:#fff;text-shadow:0 0 14px rgba(255,255,255,.7)}
+.stars button:hover{transform:scale(1.15)}
+.cnt{align-self:flex-end;font-size:12px;color:var(--gray);margin-top:-8px}
+#r-msg{font-size:14px;min-height:20px}
+#r-msg.bad{color:#e0a0a0}#r-msg.ok{color:#fff}
+#r-sum{font-family:'Unbounded',sans-serif;color:var(--white);margin-bottom:18px;font-size:18px}
+.rev{padding:20px 24px;margin-bottom:16px}
+.rev .top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.rev b{color:var(--white)}
+.rev p{margin:8px 0 6px;color:var(--light);overflow-wrap:anywhere;white-space:pre-wrap}
+.rev small{color:var(--gray)}
+.note{color:var(--gray)}
+/* loader */
+#loader{position:fixed;inset:0;z-index:100;background:radial-gradient(600px 400px at 50% 40%,#202226,#08080a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .7s,visibility .7s}
+#loader.hide{opacity:0;visibility:hidden}
+#loader svg{width:92px;height:92px;animation:pulse 1.8s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(255,255,255,.4))}
+#loader b{font:700 18px 'Unbounded',sans-serif;letter-spacing:.2em;color:var(--white)}
+#loader i{width:150px;height:3px;border-radius:3px;background:#222;overflow:hidden;position:relative}
+#loader i::after{content:"";position:absolute;inset:0;width:40%;background:#fff;border-radius:3px;animation:bar 1.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.08)}}
+@keyframes bar{from{left:-40%}to{left:100%}}
+@media(max-width:900px){.rv-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.hm{display:none}.logo{font-size:13px}nav{gap:2px}header{padding:14px 14px}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="moon" viewBox="0 0 64 64"><defs><radialGradient id="mg" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#7a7d83"/></radialGradient></defs><circle cx="32" cy="32" r="26" fill="url(#mg)"/><circle cx="23" cy="26" r="5.5" fill="#000" fill-opacity=".2"/><circle cx="41" cy="40" r="7.5" fill="#000" fill-opacity=".2"/><circle cx="40" cy="21" r="3.2" fill="#000" fill-opacity=".18"/><circle cx="24" cy="44" r="3" fill="#000" fill-opacity=".16"/></symbol></svg>
+<div id="loader"><svg><use href="#moon"/></svg><b>MOONVALE</b><i></i></div>
 <canvas id="scene" aria-hidden="true"></canvas>
 <div id="portal"></div>
 
 <header>
   <a href="#top" class="logo">MoonVale</a>
   <nav>
-    <a href="#discord">Discord</a>
-    <a href="#twitch">Twitch</a>
+    <a class="hm" href="#features">О сервере</a>
+    <a class="hm" href="#twitch">Twitch</a>
+    <a href="#reviews">Отзывы</a>
+    <button id="lang" class="lang" type="button" aria-label="Language">EN</button>
+    <a class="btn btn-main join" href="https://discord.gg/j4Nkn2MgW4" data-go>Присоединиться</a>
   </nav>
 </header>
 
+<div id="home">
 <main id="top">
   <div class="hero">
     <div class="hero-text">
@@ -143,10 +196,25 @@ footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px
       <p class="lead">Лунная долина для тех, кто играет вместе. Заходи на сервер MoonVale, находи команду и оставайся с нами.</p>
       <div class="actions">
         <a class="btn btn-main" href="https://discord.gg/j4Nkn2MgW4" data-go>Войти в MoonVale</a>
-        <a class="btn btn-ghost" href="#discord">О сервере</a>
+        <a class="btn btn-ghost" href="#features">О сервере</a>
       </div>
     </div>
   </div>
+
+  <section id="features">
+    <div class="wrap">
+      <h2 class="reveal">Что есть на сервере</h2>
+      <p class="sub reveal">Всё, чтобы играть было интереснее.</p>
+      <div class="feat">
+        <div class="card reveal tilt"><div class="ico">01</div><h3>Гильдии</h3><p>Собственная система гильдий: объединяйтесь, растите и соревнуйтесь с другими.</p></div>
+        <div class="card reveal tilt"><div class="ico">02</div><h3>Экономика</h3><p>Зарабатывайте валюту сервера и тратьте её на награды и улучшения.</p></div>
+        <div class="card reveal tilt"><div class="ico">03</div><h3>Живое общение</h3><p>Активный чат и голосовые каналы, где всегда есть с кем поговорить.</p></div>
+        <div class="card reveal tilt"><div class="ico">04</div><h3>Друзья и напарники</h3><p>Найди друзей или партнёра для совместной игры.</p></div>
+        <div class="card reveal tilt"><div class="ico">05</div><h3>Разные роли</h3><p>Большое разнообразие ролей, чтобы выделиться среди остальных.</p></div>
+        <div class="card reveal tilt"><div class="ico">06</div><h3>И многое другое</h3><p>Новые возможности появляются постоянно. Заходи и смотри сам.</p></div>
+      </div>
+    </div>
+  </section>
 
   <section id="discord">
     <div class="wrap">
@@ -184,6 +252,26 @@ footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px
     </div>
   </section>
 </main>
+</div>
+<section id="reviews">
+  <div class="wrap">
+    <a href="#top" class="back">← На главную</a>
+    <h2>Отзывы о MoonVale</h2>
+    <p class="sub">Расскажи, как тебе на сервере. Отзывы видят все участники.</p>
+    <div class="rv-grid">
+      <form class="card" id="rform" novalidate>
+        <label>Ваш ник<input id="r-name" maxlength="24" autocomplete="off" placeholder="Например, Luna"></label>
+        <label>Оценка<span class="stars" id="r-stars" role="radiogroup"><button type="button" aria-label="1">★</button><button type="button" aria-label="2">★</button><button type="button" aria-label="3">★</button><button type="button" aria-label="4">★</button><button type="button" aria-label="5">★</button></span></label>
+        <label>Отзыв<textarea id="r-text" rows="5" maxlength="300" placeholder="Что тебе понравилось?"></textarea></label>
+        <div class="cnt"><span id="r-cnt">0</span>/300</div>
+        <button class="btn btn-main" type="submit">Отправить отзыв</button>
+        <p id="r-msg" aria-live="polite"></p>
+      </form>
+      <div><div id="r-sum"></div><div id="r-list"></div></div>
+    </div>
+  </div>
+</section>
+
 
 <footer>© 2026 MoonVale. Все права защищены.</footer>
 
@@ -246,20 +334,24 @@ footer{padding:50px 20px 60px;text-align:center;color:var(--gray);font-size:14px
   var stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.09,transparent:true,opacity:.7}));
   scene.add(stars);
 
-  var mx=0,my=0,sy=0,wide=true;
+  var mx=0,my=0,sy=0,wide=true,base=1;
   addEventListener('mousemove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;});
   addEventListener('scroll',function(){sy=scrollY;},{passive:true});
   function resize(){
     renderer.setSize(innerWidth,innerHeight,false);
     camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
-    wide=innerWidth>900; var k=wide?1:.62; moonGroup.scale.setScalar(k);
+    wide=innerWidth>900; base=wide?1:.62;
   }
   addEventListener('resize',resize); resize();
 
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches, t0=performance.now();
   function frame(now){
     var t=(now-t0)/1000;
-    var targetX=wide?3.6:0, targetY=wide?0:2.2-Math.min(sy/innerHeight,1)*1.2;
+    var p=Math.min(1,sy/Math.max(1,document.documentElement.scrollHeight-innerHeight));
+    var ps=moonGroup.userData.ps||0; ps+=(p-ps)*.06; moonGroup.userData.ps=ps;
+    var targetX=wide?3.6-ps*2.4:0, targetY=wide?-ps*1.0:2.2-ps*1.4;
+    moonGroup.scale.setScalar(base*(1-ps*.3));
+    var a=-1.1+ps*3.0; sun.position.set(Math.sin(a)*8,4,Math.cos(a)*8);
     moonGroup.position.x+=(targetX-moonGroup.position.x)*.05;
     moonGroup.position.y+=(targetY-moonGroup.position.y)*.05+Math.sin(t*.6)*.002;
     if(!reduce){moonGroup.rotation.y=t*.12+sy*.0012;}
@@ -325,6 +417,121 @@ document.querySelectorAll('[data-go]').forEach(function(a){
   });
 });
 addEventListener('pageshow',function(){portal.classList.remove('go');});
+</script>
+<script>
+/* ---------- i18n, loader, router, reviews ---------- */
+(function(){
+  var FB={project:'',key:''}; /* <-- сюда данные Firebase (см. инструкцию) */
+  var EN={
+  'Игровое сообщество':'Gaming community','Войти в MoonVale':'Join MoonVale','О сервере':'About',
+  'Лунная долина для тех, кто играет вместе. Заходи на сервер MoonVale, находи команду и оставайся с нами.':'A lunar valley for those who play together. Join MoonVale, find your team and stay with us.',
+  'Отзывы':'Reviews','Присоединиться':'Join',
+  'Что есть на сервере':'What’s on the server','Всё, чтобы играть было интереснее.':'Everything to make playing more fun.',
+  'Гильдии':'Guilds','Собственная система гильдий: объединяйтесь, растите и соревнуйтесь с другими.':'Our own guild system: team up, grow and compete with others.',
+  'Экономика':'Economy','Зарабатывайте валюту сервера и тратьте её на награды и улучшения.':'Earn server currency and spend it on rewards and upgrades.',
+  'Живое общение':'Active community','Активный чат и голосовые каналы, где всегда есть с кем поговорить.':'A busy chat and voice channels where there is always someone to talk to.',
+  'Друзья и напарники':'Friends and teammates','Найди друзей или партнёра для совместной игры.':'Find friends or a partner to play with.',
+  'Разные роли':'Diverse roles','Большое разнообразие ролей, чтобы выделиться среди остальных.':'A wide variety of roles to help you stand out.',
+  'И многое другое':'And much more','Новые возможности появляются постоянно. Заходи и смотри сам.':'New features keep coming. Come and see for yourself.',
+  'Добро пожаловать в MoonVale':'Welcome to MoonVale','Общайся, собирай команду и узнавай о стримах первым.':'Chat, build a team and be the first to know about streams.',
+  'MoonVale ждёт тебя в Discord':'MoonVale is waiting for you on Discord','Нажми на кнопку, и мы откроем приглашение на сервер.':'Press the button and we will open the server invite.',
+  'Открыть приглашение':'Open invite','Стримеры сервера':'Server streamers','На MoonVale стримят TyGaM и v3lmurt. Заходи на их каналы в Twitch.':'TyGaM and v3lmurt stream on MoonVale. Visit their Twitch channels.',
+  'Смотреть канал':'Watch channel','© 2026 MoonVale. Все права защищены.':'© 2026 MoonVale. All rights reserved.',
+  '← На главную':'← Back to home','Отзывы о MoonVale':'MoonVale reviews','Расскажи, как тебе на сервере. Отзывы видят все участники.':'Tell us what you think of the server. Everyone can see reviews.',
+  'Ваш ник':'Your nickname','Оценка':'Rating','Отзыв':'Review','Отправить отзыв':'Send review',
+  'Например, Luna':'e.g. Luna','Что тебе понравилось?':'What did you like?',
+  'Онлайн':'Online','В голосовых каналах':'In voice channels','Всего на сервере':'Total members',
+  'отзывов':'reviews','Пока нет отзывов. Будь первым!':'No reviews yet. Be the first!','Отзывы скоро появятся.':'Reviews are coming soon.','Не удалось загрузить отзывы.':'Could not load reviews.',
+  'Отправка отзывов пока не подключена.':'Review sending is not connected yet.','Введите ник (от 2 символов).':'Enter a nickname (2+ characters).',
+  'Выберите количество звёзд.':'Choose a star rating.','Отзыв должен быть не короче 10 символов.':'The review must be at least 10 characters.',
+  'Подождите минуту перед следующим отзывом.':'Please wait a minute before the next review.','Спасибо за отзыв!':'Thanks for your review!','Не удалось отправить отзыв. Попробуйте позже.':'Could not send the review. Please try again later.'
+  };
+  var TITLE={ru:'MoonVale — игровое сообщество в Discord',en:'MoonVale — gaming community on Discord'};
+  var lang='ru',orig=new WeakMap(),$=function(i){return document.getElementById(i);};
+  try{lang=localStorage.getItem('mv_lang')||(/^en/i.test(navigator.language)?'en':'ru');}catch(e){}
+  function tr(x){return lang==='en'&&EN[x]?EN[x]:x;}
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+
+  function applyLang(){
+    document.documentElement.lang=lang; document.title=TITLE[lang]; $('lang').textContent=lang==='en'?'RU':'EN';
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n;
+    while(n=w.nextNode()){
+      var o=orig.get(n);
+      if(o===undefined){var k0=n.nodeValue.trim();if(!k0||EN[k0]===undefined)continue;o=n.nodeValue;orig.set(n,o);}
+      var k=o.trim();n.nodeValue=lang==='en'?o.replace(k,EN[k]):o;
+    }
+    document.querySelectorAll('[title],[placeholder]').forEach(function(e){
+      ['title','placeholder'].forEach(function(a){
+        if(!e.hasAttribute(a))return;var d='ru'+a;
+        if(!e.dataset[d])e.dataset[d]=e.getAttribute(a);
+        e.setAttribute(a,tr(e.dataset[d]));
+      });
+    });
+    var m=$('r-msg');if(m.dataset.k)m.textContent=tr(m.dataset.k);
+    render();
+  }
+  $('lang').onclick=function(){lang=lang==='en'?'ru':'en';try{localStorage.setItem('mv_lang',lang);}catch(e){}applyLang();};
+
+  /* reviews */
+  var list=[],state='',stars=0,API='https://firestore.googleapis.com/v1/projects/'+FB.project+'/databases/(default)/documents/reviews';
+  function paint(){[].forEach.call($('r-stars').children,function(b,i){b.classList.toggle('on',i<stars);});}
+  [].forEach.call($('r-stars').children,function(b,i){b.onclick=function(){stars=i+1;paint();};});
+  $('r-text').oninput=function(){$('r-cnt').textContent=this.value.length;};
+  function bar(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);}
+  function render(){
+    var box=$('r-list'),sum=$('r-sum');box.textContent='';sum.textContent='';
+    var msg=!FB.project?'Отзывы скоро появятся.':state==='err'?'Не удалось загрузить отзывы.':!list.length?'Пока нет отзывов. Будь первым!':'';
+    if(msg){box.appendChild(el('p','note',tr(msg)));return;}
+    var avg=list.reduce(function(a,r){return a+r.s;},0)/list.length;
+    sum.textContent=avg.toFixed(1)+' ★ · '+list.length+' '+tr('отзывов');
+    list.forEach(function(r){
+      var c=el('div','card rev'),t=el('div','top');
+      t.appendChild(el('b','',r.n));t.appendChild(el('span','stv on',bar(r.s)));
+      c.appendChild(t);c.appendChild(el('p','',r.t));
+      c.appendChild(el('small','',new Date(r.d).toLocaleDateString(lang==='en'?'en-GB':'ru-RU')));
+      box.appendChild(c);
+    });
+  }
+  var loaded=false;
+  function load(){
+    if(!FB.project||loaded)return;loaded=true;
+    fetch(API+'?pageSize=50&orderBy='+encodeURIComponent('ts desc')+'&key='+FB.key).then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(j){list=(j.documents||[]).map(function(d){var f=d.fields;return{n:f.name.stringValue,t:f.text.stringValue,s:+f.stars.integerValue,d:+f.ts.integerValue};});state='';render();})
+    .catch(function(){state='err';loaded=false;render();});
+  }
+  $('rform').addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=$('r-name').value.trim(),t=$('r-text').value.trim(),m=$('r-msg');
+    function say(x,ok){m.textContent=tr(x);m.dataset.k=x;m.className=ok?'ok':'bad';}
+    if(!FB.project)return say('Отправка отзывов пока не подключена.');
+    if(n.length<2)return say('Введите ник (от 2 символов).');
+    if(!stars)return say('Выберите количество звёзд.');
+    if(t.length<10)return say('Отзыв должен быть не короче 10 символов.');
+    try{if(Date.now()-(+localStorage.getItem('mv_last')||0)<60000)return say('Подождите минуту перед следующим отзывом.');}catch(_){}
+    fetch(API+'?key='+FB.key,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{name:{stringValue:n},text:{stringValue:t},stars:{integerValue:String(stars)},ts:{integerValue:String(Date.now())}}})})
+    .then(function(r){if(!r.ok)throw 0;
+      try{localStorage.setItem('mv_last',Date.now());}catch(_){}
+      list.unshift({n:n,t:t,s:stars,d:Date.now()});state='';render();
+      $('r-text').value='';$('r-cnt').textContent=0;stars=0;paint();say('Спасибо за отзыв!',1);})
+    .catch(function(){say('Не удалось отправить отзыв. Попробуйте позже.');});
+  });
+
+  /* "page" router: #reviews shows the reviews page */
+  function route(){
+    var rv=location.hash==='#reviews';document.body.classList.toggle('rv',rv);
+    if(rv){scrollTo(0,0);load();}
+    else if(location.hash.length>1){var t=document.querySelector(location.hash);if(t)setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},30);}
+  }
+  addEventListener('hashchange',route);
+
+  /* loader */
+  var t0=Date.now(),L=$('loader');
+  function hide(){L.classList.add('hide');}
+  addEventListener('load',function(){setTimeout(hide,Math.max(0,900-(Date.now()-t0)));});
+  setTimeout(hide,5000);
+
+  applyLang();route();
+})();
 </script>
 </body>
 </html>
